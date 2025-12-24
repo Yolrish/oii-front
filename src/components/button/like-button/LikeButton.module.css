@@ -1,0 +1,52 @@
+.likeButton {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    /* gap-1.5 */
+    /* px-2 py-1 */
+    border-radius: 9999px;
+    /* rounded-full */
+    transition: all 0.3s ease-in-out;
+    /* transition-all duration-200 */
+    cursor: pointer;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+}
+
+.likeButton.loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.icon.loading {
+    animation: bounce 1s infinite;
+    /* bounce-animation-effect */
+}
+
+.count {
+    color: var(--color-text-2, #7D7D7A);
+    font-family: var(--font-poppins);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+
+    50% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}

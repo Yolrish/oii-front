@@ -1,0 +1,212 @@
+/* 音频播放器容器 */
+.audio_player {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px;
+    border-radius: 16px;
+    background: #FCF9F5;
+    width: 100%;
+}
+
+/* 播放/暂停按钮 */
+.play_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+
+    border-radius: 8px;
+    background: var(--bg---color-bg-2, #EDEDED);
+
+    cursor: pointer;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+
+    position: relative;
+    isolation: isolate;
+}
+
+/* 图标通用样式 */
+.play_btn_dot {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--color-brand-2, #20201E);
+
+    position: absolute;
+    z-index: 1;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+
+    position: absolute;
+    z-index: 2;
+}
+
+/* 时间显示 */
+.time {
+    color: var(--color-text-0, #262722);
+    font-family: var(--font-inter);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* 进度条容器 */
+.progress {
+    position: relative;
+    flex: 1;
+    height: 6px;
+    background-color: #c4c4c0;
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: visible;
+}
+
+/* 已播放进度 */
+.progress_filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #1a1a1a;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+/* 进度条拖动手柄 */
+.progress_thumb {
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: transform 0.1s ease;
+}
+
+/* 进度条 hover 时手柄放大 */
+.progress:hover .progress_thumb {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* 音量控制区域 */
+.volume_control {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* 音量按钮 */
+.volume_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.15s ease;
+    flex-shrink: 0;
+}
+
+.volume_btn:hover {
+    opacity: 0.7;
+}
+
+/* 音量图标样式 */
+.volume_icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-0, #262722);
+}
+
+/* 音量滑块包装器 - 用于实现滑出动画 */
+.volume_slider_wrapper {
+    overflow: hidden;
+    width: 0;
+    opacity: 0;
+    transition: width 0.2s ease, opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    padding-left: 0;
+}
+
+/* hover 时或拖动时显示滑块 */
+.volume_control:hover .volume_slider_wrapper,
+.volume_slider_wrapper.visible {
+    width: 68px;
+    opacity: 1;
+    padding-left: 8px;
+}
+
+/* 音量滑块容器 */
+.volume_slider {
+    position: relative;
+    width: 60px;
+    height: 4px;
+    background-color: #c4c4c0;
+    border-radius: 2px;
+    cursor: pointer;
+    overflow: visible;
+}
+
+/* 音量填充 */
+.volume_slider_filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--color-text-0, #262722);
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+/* 音量滑块手柄 */
+.volume_slider_thumb {
+    position: absolute;
+    top: 50%;
+    width: 4px;
+    height: 10px;
+    background-color: var(--color-text-0, #262722);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: transform 0.1s ease;
+}
+
+/* 音量滑块 hover 时手柄放大 */
+.volume_slider:hover .volume_slider_thumb {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* 响应式适配 */
+@media (max-width: 480px) {
+    .audio_player {
+        gap: 12px;
+        padding: 12px 16px;
+    }
+
+    .play_btn {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+    }
+
+    .icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .time {
+        font-size: 12px;
+        min-width: 36px;
+    }
+}

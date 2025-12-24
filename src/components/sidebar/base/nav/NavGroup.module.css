@@ -1,0 +1,56 @@
+.content {}
+
+.item {}
+
+.button {
+    height: 48px;
+    width: 100%;
+    max-width: 200px;
+
+    border-radius: 12px;
+    padding: 0px 16px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-content: center;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    border: 1px solid #FFF;
+
+    &:hover {
+        background: rgba(102, 101, 241, 0.08);
+        opacity: 1;
+    }
+}
+
+.button_active {
+    background: var(--color-bg-1, #F5F5F7);
+    position: relative;
+
+    opacity: 1;
+
+    &:hover {
+        background: color-mix(in srgb, var(--color-bg-1, #F5F5F7) 50%, transparent);
+    }
+}
+
+.button_label {
+    color: var(--color-text-0, #262722);
+    font-family: var(--font-poppins);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.button_label_active {
+    font-weight: 600;
+}
+
+.button_collapsed {}
+
+.hide {
+    display: none;
+}

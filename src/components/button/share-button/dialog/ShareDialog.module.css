@@ -1,0 +1,19 @@
+.markdown_renderer {
+    max-width: 100%;
+    code{
+        max-height: 100px;
+        max-width: 420px;
+    }
+}
+
+.markdown_renderer img {
+    display: none;
+}
+
+.markdown_renderer br {
+    display: none;
+}
+
+.markdown_renderer hr {
+    display: none;
+}

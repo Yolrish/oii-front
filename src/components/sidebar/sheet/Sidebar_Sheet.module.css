@@ -1,0 +1,30 @@
+.sidebar_sheet_trigger {
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+}
+
+.sidebar_sheet_sidebar {
+    width: 240px;
+    height: 100%;
+}
+
+@media not (max-width: 1024px) {
+    .sidebar_sheet_trigger {
+        display: none;
+    }
+}
+
+
+
+.sheet_content {
+    width: fit-content;
+}
+
+.sheet_content [data-slot="sidebar"] {
+    height: 100%;
+}
+
+.sheet_content :global(.close-button) {
+    display: none !important;
+}

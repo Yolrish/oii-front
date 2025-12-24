@@ -1,0 +1,104 @@
+.carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide_hidden{
+    width: 100%;
+    height: fit-content;
+    opacity: 0;
+}
+
+.button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1f2937;
+    transition: all 0.2s ease-in-out;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+
+    z-index: 1;
+}
+
+.button:hover {
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.buttonNext {
+    right: 1rem;
+}
+
+.buttonPrev {
+    left: 1rem;
+}
+
+.carouselHover {
+    & .buttonNext {
+        opacity: 0;
+    }
+
+    & .buttonPrev {
+        opacity: 0;
+    }
+
+    &:hover {
+        & .buttonNext {
+            opacity: 1;
+        }
+
+        & .buttonPrev {
+            opacity: 1;
+        }
+    }
+}
+
+.dotContainer {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 1;
+}
+
+.dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--color-bg-2);
+    box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.11) inset;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.dot:hover {
+    background-color: rgba(255, 255, 255, 1);
+    
+}
+
+.dotActive {
+    background-color: var(--color-brand-2);
+    transform: scale(1.05);
+}

@@ -1,0 +1,402 @@
+.register-page {
+    width: 100%;
+    height: fit-content;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg,
+            #A3DFFF 0%,
+            transparent 40%,
+            transparent 100%);
+    padding: 2rem;
+    min-width: 500px;
+    overflow: auto;
+}
+
+.register-page__container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    width: 100%;
+    height: fit-content;
+    min-width: 500px;
+    max-width: 800px;
+}
+
+/* 装饰性元素 */
+.register-page__decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.register-page__decoration {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    opacity: 0.8;
+}
+
+.register-page__decoration[data-type="star-top"] {
+    top: -60px;
+    right: 80px;
+    transform: rotate(15deg);
+}
+
+.register-page__decoration[data-type="circle-green"] {
+    top: -40px;
+    left: -20px;
+    width: 28px;
+    height: 28px;
+}
+
+.register-page__decoration[data-type="triangle-yellow"] {
+    bottom: 120px;
+    right: -30px;
+    width: 24px;
+    height: 24px;
+    transform: rotate(-20deg);
+}
+
+.register-page__decoration[data-type="diamond-pink"] {
+    bottom: -20px;
+    left: 40px;
+    width: 36px;
+    height: 36px;
+    transform: rotate(45deg);
+}
+
+.register-page__card {
+    position: relative;
+    width: 500px;
+    max-width: 500px;
+    z-index: 2;
+    background-color: transparent;
+    border-radius: 24px;
+    box-shadow: none;
+    border: none;
+    padding: 0;
+}
+
+.register-page__header {
+    padding: 48px 40px 32px;
+    text-align: center;
+}
+
+.register-page__title {
+    width: 100%;
+    text-align: center;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--color-text-0);
+    margin: 0;
+    margin-top: 96px;
+    margin-bottom: 64px;
+    z-index: 1;
+    font-family: var(--font-source-serif-4);
+}
+
+.register-page__content {
+    padding: 0 40px 48px;
+}
+
+.register-page__error {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #dc2626;
+    background-color: #fef2f2;
+    border-radius: 24px;
+    border: 1px solid #fecaca;
+    margin-bottom: 24px;
+}
+
+.register-page__success {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #16a34a;
+    background-color: #f0fdf4;
+    border-radius: 24px;
+    border: 1px solid #bbf7d0;
+    margin-bottom: 24px;
+}
+
+.register-page__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.register-page__form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.register-page__form-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-0);
+    margin-bottom: 4px;
+}
+
+.register-page__input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    background-color: var(--color-gray-6);
+    color: var(--color-text-0);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.register-page__input:focus {
+    outline: none;
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.register-page__input::placeholder {
+    color: var(--color-text-2);
+    font-size: 16px;
+}
+
+.register-page__form-message {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.register-page__submit-button {
+    width: 100%;
+    height: 48px;
+    background-color: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 8px;
+}
+
+.register-page__submit-button:hover:not(:disabled) {
+    background-color: #2d2d2d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.register-page__submit-button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.register-page__submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.register-page__checkbox-field {
+    margin-top: 4px;
+}
+
+.register-page__checkbox-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.register-page__checkbox {
+    /* 暂时注释掉自定义样式，使用默认样式 */
+    /* width: 16px;
+    height: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 3px;
+    cursor: pointer;
+    appearance: none;
+    background-color: white;
+    transition: all 0.2s ease;
+    position: relative;
+    margin-top: 2px;
+    flex-shrink: 0; */
+}
+
+.register-page__checkbox:checked {
+    /* background-color: #6366f1;
+    border-color: #6366f1; */
+}
+
+.register-page__checkbox:checked::after {
+    /* content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    font-weight: bold; */
+}
+
+.register-page__checkbox-label {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-1);
+}
+
+.register-page__terms-link {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-1);
+}
+
+.register-page__terms-link:hover {
+    text-decoration: underline;
+}
+
+.register-page__divider {
+    margin: 32px 0 24px;
+    text-align: center;
+    position: relative;
+}
+
+.register-page__divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #e5e7eb;
+}
+
+.register-page__divider-text {
+    background-color: var(--color-bg-0);
+    padding: 0 16px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-text-2);
+    position: relative;
+    z-index: 1;
+}
+
+.register-page__social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.register-page__social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 16px;
+    border: 2px solid var(--color-text-1);
+    border-radius: 24px;
+    background-color: white;
+    color: var(--color-text-0);
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.register-page__social-button:hover {
+    background-color: #f9fafb;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.register-page__social-button:active {
+    transform: translateY(0);
+}
+
+.register-page__social-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.register-page__signin-text {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-text-1);
+}
+
+.register-page__signin-link {
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-page__signin-link:hover {
+    text-decoration: underline;
+}
+
+/* .register-page__bg-icon-1 {
+    background-image: url('../../../../public/page-auth/bg-icon-1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 60px;
+    right: 280px;
+    z-index: 0;
+}
+
+.register-page__bg-icon-2 {
+    background-image: url('../../../../public/page-auth/bg-icon-2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 40px;
+    right: 160px;
+    z-index: 0;
+}
+
+.register-page__bg-icon-3 {
+    background-image: url('../../../../public/page-auth/bg-icon-3.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 120px;
+    right: 60px;
+    z-index: 0;
+}
+
+.register-page__bg-icon-4 {
+    background-image: url('../../../../public/page-auth/bg-icon-4.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 180px;
+    right: 170px;
+    z-index: 0;
+} */

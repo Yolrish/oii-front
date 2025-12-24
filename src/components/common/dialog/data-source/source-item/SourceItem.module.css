@@ -1,0 +1,107 @@
+.timeline_source_list_item {
+    flex-shrink: 0;
+    width: 100%;
+    overflow: hidden;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    border-radius: 8px;
+    background: rgba(44, 147, 255, 0.08);
+
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        .timeline_source_list_item_info_container_title {
+            text-decoration: underline;
+        }
+
+        .timeline_source_list_item_info_container_description {
+            text-decoration: underline;
+        }
+
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.timeline_source_list_item_info_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    color: var(--color-text-2, #7D7D7A);
+
+    /* Caption_12_r */
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.timeline_source_list_item_info_container_icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+
+    span {
+        font-size: 12px;
+    }
+}
+
+.timeline_source_list_item_info_container_delete {
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    svg {
+        width: 16px;
+        height: 16px;
+        color: var(--color-other-2);
+    }
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+}
+
+.timeline_source_list_item_info_container_description {
+
+    width: 100%;
+
+    overflow: hidden;
+    color: var(--color-text-0, #262722);
+    text-overflow: ellipsis;
+
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.4;
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        align-self: stretch;
+    }
+}

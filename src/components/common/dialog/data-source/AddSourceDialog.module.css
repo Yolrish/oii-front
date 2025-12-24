@@ -1,0 +1,311 @@
+/* Confirm Dialog 主容器 */
+.add_source_dialog {
+    border-radius: 24px;
+    min-width: 400px;
+    max-width: 440px;
+    padding: 0;
+    background-color: var(--color-bg-0, #FFFFFF);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Dialog Header */
+.addSource_dialog_header {
+    padding: 32px 32px 0 32px;
+    border-bottom: none;
+}
+
+.addSource_dialog_title {
+    color: var(--color-text-0, #262722);
+    font-family: Roboto;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+    text-align: left;
+    margin: 0;
+}
+
+/* Content Container */
+.addSource_dialog_content {
+    padding: 16px 32px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.addSource_dialog_pastUrl_container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.addSource_dialog_pastUrl_title {
+    color: var(--color-text-2, #7D7D7A);
+
+    /* body_14_r */
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    /* 19.6px */
+}
+
+.addSource_dialog_pastUrl_input_container {
+    border-radius: 8px;
+    border: 1px solid var(--color-bg-2, #EDEDED);
+    background: var(--color-bg-3, #F8F8F8);
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.addSource_dialog_pastUrl_input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.addSource_dialog_pastUrl_input_button {
+    border-radius: 8px;
+    background: var(--color-other-1, #2C93FF);
+    display: flex;
+    padding: 8px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    span {
+        color: #FFF;
+
+        /* body_14_r */
+        font-family: Roboto;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+        /* 19.6px */
+    }
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.addSource_dialog_addedUrls_container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.addSource_dialog_addedUrls_title {
+    color: var(--color-text-2, #7D7D7A);
+
+    /* body_14_r */
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    /* 19.6px */
+}
+
+.addSource_dialog_addedUrls_list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 400px;
+    max-height: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 12px;
+}
+
+.addSource_dialog_text {
+    color: var(--color-text-1, #374151);
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+}
+
+/* Actions Container */
+.addSource_dialog_actions {
+    display: flex;
+    gap: 12px;
+    padding: 0 32px 32px 32px;
+    justify-content: flex-end;
+}
+
+/* Cancel Button (黑色背景) */
+.addSource_dialog_cancel {
+    padding: 12px 24px;
+    border-radius: 24px;
+    background-color: var(--color-text-0, #262722);
+    color: var(--color-text-4, #FFFFFF);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+
+    &:hover {
+        background-color: var(--color-text-1, #374151);
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(38, 39, 34, 0.2);
+    }
+}
+
+/* Confirm Button (灰色背景/outline样式) */
+.addSource_dialog_confirm {
+    padding: 12px 24px;
+    border-radius: 24px;
+    background-color: var(--color-bg-1, #F9FAFB);
+    color: var(--color-text-0, #262722);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(249, 250, 251, 0.5);
+    }
+}
+
+/* 等待状态的确认按钮 (灰色禁用状态) */
+.addSource_dialog_addSource_waiting {
+    padding: 12px 24px;
+    border-radius: 24px;
+    background-color: var(--color-bg-2, #e5e7eb);
+    color: var(--color-text-3, #9ca3af);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    cursor: not-allowed;
+    transition: all 0.2s ease;
+    min-width: 120px;
+
+    &:hover {
+        background-color: var(--color-bg-2, #e5e7eb);
+        transform: none;
+    }
+
+    &:active {
+        transform: none;
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: none;
+    }
+
+    &:disabled {
+        background-color: var(--color-bg-2, #e5e7eb);
+        color: var(--color-text-3, #9ca3af);
+        cursor: not-allowed;
+    }
+}
+
+/* 危险操作确认按钮 (红色背景) */
+.addSource_dialog_addSource_danger {
+    padding: 12px 24px;
+    border-radius: 24px;
+    background-color: var(--color-error-0, #ef4444);
+    color: var(--color-text-4, #FFFFFF);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+
+    &:hover {
+        background-color: var(--color-error-1, #dc2626);
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+    }
+}
+
+.addSource_dialog :global(.close-button) {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--color-bg-2, #EDEDEDCC);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    &:focus {
+        border: none;
+        box-shadow: none;
+    }
+
+    &:focus-visible {
+        border: none;
+        box-shadow: none;
+    }
+}

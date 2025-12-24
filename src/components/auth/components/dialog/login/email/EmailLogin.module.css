@@ -1,0 +1,148 @@
+.loginDialog_form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.loginDialog_formField {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.loginDialog_formLabel {
+    color: var(--color-text-0, #262722);
+
+    /* Caption_12_r */
+    font-family: Roboto;
+    font-family: var(--font-roboto);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+.loginDialog_input {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    background-color: var(--color-gray-6);
+    color: var(--color-text-0);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+
+    /* Caption_12_r */
+    font-family: Roboto;
+    font-family: var(--font-roboto);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loginDialog_input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08);
+}
+
+.loginDialog_submitButton {
+    width: 100%;
+    height: 40px;
+    background-color: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 12px;
+
+    border-radius: 12px;
+}
+
+.loginDialog_submitButton:hover:not(:disabled) {
+    background-color: #2d2d2d;
+    transform: translateY(-1px);
+}
+
+.loginDialog_submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+
+    background: rgba(32, 32, 30, 0.60);
+}
+
+.loginDialog_error {
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #dc2626;
+    background-color: #fef2f2;
+    border-radius: 6px;
+    border: 1px solid #fecaca;
+}
+
+.loginDialog_divider {
+    margin: 8px 0 0;
+    text-align: center;
+    position: relative;
+    isolation: isolate;
+}
+
+.loginDialog_divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #e5e7eb;
+}
+
+.loginDialog_divider_text {
+    background-color: var(--color-bg-0);
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-text-2);
+    position: relative;
+    text-transform: capitalize;
+    z-index: 1;
+}
+
+.loginDialog_socialButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 44px;
+    padding: 0 16px;
+    border: 2px solid var(--color-text-1);
+    border-radius: 8px;
+    background-color: white;
+    color: var(--color-text-0);
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.loginDialog_switchRow {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--color-text-1);
+}
+
+.loginDialog_linkButton {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--color-other-1);
+    cursor: pointer;
+}

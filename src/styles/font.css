@@ -1,0 +1,24 @@
+/* @import "../../node_modules/@fontsource/roboto/400.css";
+@import "../../node_modules/@fontsource/roboto/600.css";
+@import "../../node_modules/@fontsource/roboto/700.css";
+@import "../../node_modules/@fontsource/source-serif-4/400.css";
+@import "../../node_modules/@fontsource/source-serif-4/600.css";
+@import "../../node_modules/@fontsource/source-serif-4/700.css";
+@import "../../node_modules/@fontsource/source-serif-pro/400.css";
+@import "../../node_modules/@fontsource/source-serif-pro/600.css";
+@import "../../node_modules/@fontsource/source-serif-pro/700.css";
+@import "../../node_modules/@fontsource/archivo-black/400.css";
+@import "../../node_modules/@fontsource/plus-jakarta-sans/400.css";
+@import "../../node_modules/@fontsource/plus-jakarta-sans/600.css";
+@import "../../node_modules/@fontsource/plus-jakarta-sans/700.css";
+@import "../../node_modules/@fontsource/plus-jakarta-sans/800.css"; */
+
+
+/* Nico Moji 由 next/font/local 提供，这里双重加载，哪个快就用哪个 */
+/* @font-face {
+    font-family: 'Nico Moji';
+    src: url('/font/nicomoji-plus_v2-5.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+} */

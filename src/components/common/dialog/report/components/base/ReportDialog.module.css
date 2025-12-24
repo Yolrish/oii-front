@@ -1,0 +1,222 @@
+/* Report Agent Dialog 主容器 */
+.report-agent-dialog {
+    border-radius: 36px;
+    box-shadow: 1px 1px 40px 0px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    background-color: var(--color-bg-0, #FFFFFF);
+}
+
+/* Dialog Header */
+.report-agent-dialog__header {
+    padding: 16px;
+    border-bottom: none;
+}
+
+.report-agent-dialog__title {
+    color: var(--color-text-0, #262722);
+    font-family: Roboto;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    text-transform: capitalize;
+    text-align: left;
+}
+
+/* Form Container */
+.report-agent-dialog__form {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Field Container */
+.report-agent-dialog__field {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Textarea Styles */
+.report-agent-dialog__textarea {
+    width: 100%;
+    min-height: 240px;
+    padding: 16px;
+    border: 1px solid var(--color-border-2, #E6E8EC);
+    border-radius: 12px;
+    background-color: var(--color-bg-0, #FFFFFF);
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--color-text-0, #262722);
+    resize: vertical;
+    outline: none;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+        color: var(--color-text-3, #B3B4B2);
+        font-family: Roboto;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+    }
+
+    &:focus {
+        border-color: var(--color-brand-1, #DDF955);
+        box-shadow: 0 0 0 2px rgba(221, 249, 85, 0.2);
+    }
+
+    &:hover {
+        border-color: var(--color-border-1, #D1D5DB);
+    }
+}
+
+/* Textarea Error State */
+.report-agent-dialog__textarea--error {
+    border-color: var(--color-error, #EF4444);
+
+    &:focus {
+        border-color: var(--color-error, #EF4444);
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+    }
+}
+
+/* Character Count Container */
+.report-agent-dialog__character-count {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+/* Character Count Text */
+.report-agent-dialog__character-count-text {
+    font-family: Roboto;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    color: var(--color-text-3, #B3B4B2);
+    transition: color 0.2s ease;
+}
+
+/* Character Count Warning State (90%+) */
+.report-agent-dialog__character-count-text--warning {
+    color: var(--color-warning, #F59E0B);
+}
+
+/* Character Count Error State (over limit) */
+.report-agent-dialog__character-count-text--error {
+    color: var(--color-error, #EF4444);
+}
+
+/* Input Styles */
+.report-agent-dialog__input {
+    width: 100%;
+    height: 48px;
+    padding: 12px 16px;
+    border: 1px solid var(--color-border-2, #E6E8EC);
+    border-radius: 12px;
+    background-color: var(--color-bg-0, #FFFFFF);
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--color-text-0, #262722);
+    outline: none;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+        color: var(--color-text-3, #B3B4B2);
+        font-family: Roboto;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+    }
+
+    &:focus {
+        border-color: var(--color-brand-1, #DDF955);
+        box-shadow: 0 0 0 2px rgba(221, 249, 85, 0.2);
+    }
+
+    &:hover {
+        border-color: var(--color-border-1, #D1D5DB);
+    }
+}
+
+/* Actions Container */
+.report-agent-dialog__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+/* Submit Button */
+.report-agent-dialog__submit {
+    padding: 12px 24px;
+    border-radius: 24px;
+    background-color: var(--color-text-0, #262722);
+    color: var(--color-text-4, #FFFFFF);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+
+    &:hover:not(:disabled) {
+        background-color: var(--color-text-1, #374151);
+        transform: translateY(-1px);
+    }
+
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(38, 39, 34, 0.2);
+    }
+}
+
+/* Disabled Submit Button */
+.report-agent-dialog__submit--disabled {
+    background-color: var(--color-bg-2, #F3F4F6);
+    color: var(--color-text-3, #B3B4B2);
+    cursor: not-allowed;
+    transform: none;
+
+    &:hover {
+        background-color: var(--color-bg-2, #F3F4F6);
+        transform: none;
+    }
+}
+
+/* Close Button Override */
+.report-agent-dialog :global(.close-button) {
+
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--color-bg-2, #EDEDEDCC);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+
+}

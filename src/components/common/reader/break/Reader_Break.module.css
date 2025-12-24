@@ -1,0 +1,237 @@
+/* Reader 分页阅读器 */
+.reader {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 400px;
+    background: var(--color-bg-1, #fff);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* 头部区域 */
+.reader__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-shrink: 0;
+}
+
+/* 标题 */
+.reader__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.reader__title_bullet {
+    color: var(--color-primary, #6366f1);
+    font-size: 24px;
+    line-height: 1;
+}
+
+.reader__title_text {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text-0, #1a1a1a);
+    font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+/* 页码信息 */
+.reader__page_info {
+    font-size: 14px;
+    color: var(--color-text-2, #9ca3af);
+    font-variant-numeric: tabular-nums;
+}
+
+/* 内容区域 */
+.reader__content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+}
+
+/* 测量容器 - 隐藏但保持布局计算，样式需与显示容器一致 */
+.reader__measure {
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+    width: 100%;
+    top: 0;
+    left: 0;
+    /* 与 reader__visible 保持一致的排版样式 */
+    font-family: 'Georgia', 'Noto Serif SC', 'Source Han Serif SC', serif;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.reader__measure p,
+.reader__measure div {
+    margin-bottom: 1em;
+    text-indent: 2em;
+}
+
+.reader__measure h1,
+.reader__measure h2,
+.reader__measure h3,
+.reader__measure h4,
+.reader__measure h5,
+.reader__measure h6 {
+    text-indent: 0;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+/* 可见内容 */
+.reader__visible {
+    height: 100%;
+    overflow: hidden;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.reader__visible--loading {
+    opacity: 0;
+}
+
+/* 分页导航 */
+.reader__pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border, #e5e7eb);
+    flex-shrink: 0;
+}
+
+.reader__pagination_pages {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 分页按钮基础样式 */
+.reader__pagination_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    color: var(--color-text-1, #4b5563);
+}
+
+/* 页码按钮 */
+.reader__pagination_btn--page {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.reader__pagination_btn--page:hover {
+    background: var(--color-bg-2, #f3f4f6);
+    color: var(--color-text-0, #1a1a1a);
+}
+
+/* 当前页 */
+.reader__pagination_btn--active {
+    background: var(--color-primary, #6366f1);
+    color: #fff;
+}
+
+.reader__pagination_btn--active:hover {
+    background: var(--color-primary-hover, #4f46e5);
+    color: #fff;
+}
+
+/* 导航按钮（上一页/下一页） */
+.reader__pagination_btn--nav {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--color-bg-2, #f3f4f6);
+}
+
+.reader__pagination_btn--nav:hover:not(:disabled) {
+    background: var(--color-bg-3, #e5e7eb);
+}
+
+/* 禁用状态 */
+.reader__pagination_btn--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* 省略号 */
+.reader__pagination_ellipsis {
+    width: 32px;
+    text-align: center;
+    color: var(--color-text-2, #9ca3af);
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+/* 阅读器内容排版优化 */
+.reader__visible {
+    font-family: 'Georgia', 'Noto Serif SC', 'Source Han Serif SC', serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-0, #374151);
+    text-align: justify;
+    text-justify: inter-ideograph;
+}
+
+.reader__visible p,
+.reader__visible div {
+    margin-bottom: 1em;
+    text-indent: 2em;
+}
+
+.reader__visible h1,
+.reader__visible h2,
+.reader__visible h3,
+.reader__visible h4,
+.reader__visible h5,
+.reader__visible h6 {
+    text-indent: 0;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
+/* 响应式调整 */
+@media (max-width: 640px) {
+    .reader {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .reader__title_text {
+        font-size: 16px;
+    }
+
+    .reader__page_info {
+        font-size: 12px;
+    }
+
+    .reader__pagination_btn--page,
+    .reader__pagination_btn--nav {
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+    }
+
+    .reader__visible,
+    .reader__measure {
+        font-size: 15px;
+        line-height: 1.75;
+    }
+}
+

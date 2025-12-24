@@ -1,0 +1,135 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+/* 全局主题变量应用到HTML根元素 */
+:root.dark,
+.dark {
+    /* Default color */
+    --light-default: #26272200;
+    /* Hover color 3% */
+    --light-hover: #25262108;
+    /* Click color 5% */
+    --light-click: #2526210d;
+    /* Active color  */
+    --light-active: #ABD8FF;
+
+    --dark-default: #20201E;
+    --dark-hover: #383834;
+    --dark-click: #4C4C47;
+    --dark-active: #ABD8FF;
+
+
+    --color-bg-0: #FFFFFF;
+    --color-bg-1: #F5F5F7;
+    --color-bg-2: #EDEDED;
+    --color-bg-3: #F8F8F8;
+    --color-bg-4: #FAFBFC;
+
+    --color-text-0: #262722;
+    --color-text-1: #51524E;
+    --color-text-2: #7D7D7A;
+    --color-text-3: #B3B4B2;
+    --color-text-4: #FFFFFF;
+
+    --color-brand-1: #DDF955;
+    --color-brand-2: #20201E;
+    --color-brand-3: #EBFDBA;
+    --color-brand-5: #FF952C;
+
+    --color-other-1: #2C93FF;
+    --color-other-2: #FF5447;
+    --color-other-3: #FF5447;
+
+    --color-tag-1: #4285F4;
+    --color-tag-2: #34A853;
+    --color-tag-3: #EA4335;
+    --color-tag-4: #FBBC05;
+    --color-tag-5: #673AB7;
+    --color-tag-6: #FF6D00;
+    --color-tag-7: #00ACC1;
+    --color-tag-8: #E91E63;
+    --color-tag-9: #0F9D58;
+    --color-tag-10: #5C6BC0;
+
+
+    --color-border-1: #AAAAA866;
+
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* Tailwind自定义工具类 */
+@layer utilities {
+    .bg-color-bg-0 {
+        background-color: var(--color-bg-0);
+    }
+
+    .bg-color-bg-1 {
+        background-color: var(--color-bg-1);
+    }
+
+    .bg-color-bg-2 {
+        background-color: var(--color-bg-2);
+    }
+
+    .bg-color-bg-3 {
+        background-color: var(--color-bg-3);
+    }
+
+    .text-color-text-1 {
+        color: var(--color-text-1);
+    }
+
+    .text-color-text-2 {
+        color: var(--color-text-2);
+    }
+
+    .text-color-text-3 {
+        color: var(--color-text-3);
+    }
+
+    .text-color-text-4 {
+        color: var(--color-text-4);
+    }
+
+    .bg-hover {
+        background-color: var(--hover);
+    }
+
+    .bg-click {
+        background-color: var(--click);
+    }
+
+    .bg-active {
+        background-color: var(--active);
+    }
+}

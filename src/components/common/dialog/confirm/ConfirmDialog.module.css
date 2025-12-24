@@ -1,0 +1,208 @@
+/* Confirm Dialog 主容器 */
+.confirm-dialog {
+    border-radius: 24px;
+    min-width: 368px;
+    max-width: 512px;
+    padding: 0;
+    background-color: var(--color-bg-0, #FFFFFF);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Dialog Header */
+.confirm-dialog__header {
+    padding: 32px 32px 0 32px;
+    border-bottom: none;
+}
+
+.confirm-dialog__title {
+    text-align: left;
+    margin: 0;
+
+    color: var(--color-text-0, #262722);
+    font-family: "Arial Black";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    text-transform: capitalize;
+}
+
+/* Content Container */
+.confirm-dialog__content {
+    padding: 0px 32px 16px 32px;
+}
+
+.confirm-dialog__text {
+    color: var(--color-text-2, #7D7D7A);
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+
+}
+
+/* Actions Container */
+.confirm-dialog__actions {
+    display: flex;
+    gap: 12px;
+    padding: 0 32px 24px 32px;
+    justify-content: flex-end;
+}
+
+/* Cancel Button (黑色背景) */
+.confirm-dialog__cancel {
+    padding: 8px 20px;
+    border-radius: 8px;
+    background-color: var(--color-text-0, #262722);
+    color: var(--color-text-4, #FFFFFF);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+
+    &:hover {
+        background-color: var(--color-text-1, #374151);
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(38, 39, 34, 0.2);
+    }
+}
+
+/* Confirm Button (灰色背景/outline样式) */
+.confirm-dialog__confirm {
+    padding: 8px 20px;
+    border-radius: 8px;
+    background-color: var(--color-bg-1, #F9FAFB);
+    color: var(--color-text-0, #262722);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(249, 250, 251, 0.5);
+    }
+}
+
+/* 等待状态的确认按钮 (灰色禁用状态) */
+.confirm-dialog__confirm_waiting {
+    padding: 8px 20px;
+    border-radius: 8px;
+    background-color: var(--color-bg-2, #e5e7eb);
+    color: var(--color-text-3, #9ca3af);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    cursor: not-allowed;
+    transition: all 0.2s ease;
+    min-width: 120px;
+
+    &:hover {
+        background-color: var(--color-bg-2, #e5e7eb);
+        transform: none;
+    }
+
+    &:active {
+        transform: none;
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: none;
+    }
+
+    &:disabled {
+        background-color: var(--color-bg-2, #e5e7eb);
+        color: var(--color-text-3, #9ca3af);
+        cursor: not-allowed;
+    }
+}
+
+/* 危险操作确认按钮 (红色背景) */
+.confirm-dialog__confirm_danger {
+    padding: 8px 20px;
+    border-radius: 8px;
+    background-color: var(--color-error-0, #ef4444);
+    color: var(--color-text-4, #FFFFFF);
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+
+    &:hover {
+        background-color: var(--color-error-1, #dc2626);
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+    }
+}
+
+.confirm-dialog :global(.close-button) {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--color-bg-2, #EDEDEDCC);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    &:focus {
+        border: none;
+        box-shadow: none;
+    }
+
+    &:focus-visible {
+        border: none;
+        box-shadow: none;
+    }
+}

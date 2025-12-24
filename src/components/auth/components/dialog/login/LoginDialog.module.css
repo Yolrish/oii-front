@@ -1,0 +1,186 @@
+/* Container mimicking card style */
+.loginDialog_container {
+    padding: 0;
+    max-width: 680px;
+}
+
+.loginDialog_header {
+    display: none;
+}
+
+.loginDialog_title {
+    margin: 0;
+    color: var(--color-text-0);
+    font-family: "Source Serif 4";
+    font-family: var(--font-source-serif-4);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-align: left;
+}
+
+.loginDialog_content {
+    padding: 48px 88px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 24px;
+}
+
+.loginDialog_content_logo {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.loginDialog_content_logo_icon {
+    width: 28px;
+    height: 28px;
+}
+
+
+.loginDialog_content_logo_text {
+    color: var(--color-text-0);
+    font-family: "Nico Moji";
+    font-family: var(--font-nico);
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.loginDialog_content_title {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.loginDialog_content_title_text {
+    width: 100%;
+    color: var(--color-text-0, #262722);
+    font-family: "Source Serif 4";
+    font-family: var(--font-source-serif-4);
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Section layout wrapper for auth content */
+.loginDialog_section {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 24px;
+}
+
+.loginDialog_tip {
+    font-size: 12px;
+    color: var(--color-text-2);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.loginDialog_tip_link {
+    position: relative;
+
+    transition: all 0.3s ease;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        height: 1px;
+        width: 0;
+        background: var(--color-text-0);
+        transition: all 0.3s ease;
+    }
+
+    &:hover::after {
+        width: 100%;
+    }
+}
+
+/* Divider */
+
+
+@media (max-width: 768px) {
+    .loginDialog_container {
+        max-width: 90%;
+    }
+
+    .loginDialog_content {
+        padding: 48px 48px;
+    }
+}
+
+@media (max-width: 468px) {
+    .loginDialog_container {
+        max-width: 90%;
+    }
+
+    .loginDialog_content {
+        padding: 48px 24px;
+    }
+}
+
+
+@media (min-width: 1440px) {
+
+}
+
+.loginDialog_container :global(.close-button) {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--color-bg-2, #EDEDEDCC);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    &:focus {
+        border: none;
+        box-shadow: none;
+    }
+
+    &:focus-visible {
+        border: none;
+        box-shadow: none;
+    }
+}
+
+.loginDialog_error {
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #dc2626;
+    background-color: #fef2f2;
+    border-radius: 6px;
+    border: 1px solid #fecaca;
+}

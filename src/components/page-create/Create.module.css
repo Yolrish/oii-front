@@ -1,0 +1,26 @@
+/* Create 页面主容器 - 明亮淡雅风格 */
+.create {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+/* 聊天区域 */
+.chat_area {
+    width: 100%;
+    height: 100%;
+    max-width: 420px;
+    min-width: 320px;
+    flex-shrink: 0;
+}
+
+/* 内容区域 */
+.content_area {
+    flex-grow: 1;
+    height: 100%;
+    min-width: 0;
+    background: rgba(255, 255, 255, 0.4);
+}

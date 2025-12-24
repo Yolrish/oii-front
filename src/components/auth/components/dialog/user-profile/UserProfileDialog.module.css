@@ -1,0 +1,235 @@
+/* Error Message */
+.userProfileDialogErrorMessage {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--color-error, #EF4444);
+    border-radius: 8px;
+    color: var(--color-error, #EF4444);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Edit Form */
+.userProfileDialogForm {
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Avatar Upload Section */
+.userProfileDialogAvatarUpload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.userProfileDialogAvatarContainer {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.userProfileDialogAvatar {
+    cursor: default;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+.userProfileDialogAvatarCameraIcon {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 24px;
+    height: 24px;
+    background-color: var(--color-bg-0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-2, #6b7280);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    z-index: 15;
+}
+
+.userProfileDialogAvatarCameraIcon:hover {
+    background-color: var(--color-bg-1);
+}
+
+.userProfileDialogAvatarChange {
+    color: var(--color-primary, #3b82f6);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.userProfileDialogAvatarChange:hover {
+    color: var(--color-primary-dark, #2563eb);
+}
+
+/* Form Inputs */
+.userProfileDialogNameInput {
+    display: flex;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--color-bg-1);
+    padding: 12px;
+    font-size: 14px;
+    resize: none;
+}
+
+.userProfileDialogNameInput:focus {
+    outline: none;
+    border-color: var(--color-primary, #3b82f6);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.userProfileDialogNameInput::placeholder {
+    color: var(--color-text-3, #9ca3af);
+}
+
+/* Bio Field Container */
+.userProfileDialogBioField {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.userProfileDialogBioInput {
+    display: flex;
+    min-height: 120px;
+    width: 100%;
+    border-radius: 6px;
+    border: 1PX solid transparent;
+    background-color: var(--color-bg-1);
+    padding: 12px;
+    font-size: 14px;
+    resize: none;
+    transition: all 0.2s ease;
+}
+
+.userProfileDialogBioInput:focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.userProfileDialogBioInput::placeholder {
+    color: var(--color-text-3, #9ca3af);
+}
+
+/* Bio Input Error State */
+.userProfileDialogBioInput--error {
+    border: 1px solid var(--color-error, #EF4444);
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.userProfileDialogBioInput--error:focus {
+    border-color: var(--color-error, #EF4444);
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
+
+/* Bio Character Count Container */
+.userProfileDialogBioCharacterCount {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 8px;
+}
+
+/* Bio Character Count Text */
+.userProfileDialogBioCharacterCountText {
+    font-family: Roboto;
+    font-family: var(--font-roboto);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    color: var(--color-text-3, #9ca3af);
+    transition: color 0.2s ease;
+}
+
+/* Bio Character Count Warning State (90%+) */
+.userProfileDialogBioCharacterCountText--warning {
+    color: var(--color-warning, #F59E0B);
+}
+
+/* Bio Character Count Error State (over limit) */
+.userProfileDialogBioCharacterCountText--error {
+    color: var(--color-error, #EF4444);
+}
+
+/* Form Actions */
+.userProfileDialogFormActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 8px;
+}
+
+.userProfileDialogFormButton {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.userProfileDialogFormButton--cancel {
+    border: none;
+    color: var(--color-text-3);
+    background-color: var(--color-bg-3);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.userProfileDialogFormButton--cancel:hover {
+    background-color: var(--color-bg-2, #f3f4f6);
+}
+
+.userProfileDialogFormButton--cancel:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.userProfileDialogFormButton--save {
+    background-color: var(--dark-default);
+    color: var(--color-text-4);
+    border-radius: 24px;
+    border: none;
+}
+
+.userProfileDialogFormButton--save:hover {
+    background-color: var(--dark-hover);
+}
+
+.userProfileDialogFormButton--save:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+
+.userProfileDialogFormButtonSpinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-text-4);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
