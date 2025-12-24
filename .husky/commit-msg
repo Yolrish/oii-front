@@ -1,0 +1,2 @@
+yarn commitlint --edit $1
+node .husky/commit-msg-emoji.mjs $1
