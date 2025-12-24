@@ -1,13 +1,22 @@
 'use client';
 
 /**
- * 无限画布组件
- * 支持拖拽、缩放、添加自定义组件等功能
+ * 无限画布基础组件
+ * 实现了画布内部功能，如需添加外部UI控件，参考 Canvas.example.tsx
+ * 
+ * 功能特性：
+ * 1. 无限平移 - 滚轮滚动 / 中键拖拽 / 抓握模式拖拽
+ * 2. 缩放 - Ctrl+滚轮以鼠标位置为中心缩放
+ * 3. 组件拖拽 - 移动模式下拖拽画布内的组件
+ * 4. 自动适配 - 双击组件自动居中显示（带流畅动画）
+ * 5. 新元素定位 - 添加新元素时自动移动画布使其居中
+ * 6. 可视区域检测 - 检测当前视口是否有元素，提供定位到最近元素功能
+ * 7. 受控模式 - scale和offset支持外部控制（受控/非受控双模式）
  * 
  * 三种鼠标模式：
- * - grab: 抓握模式 - 拖动移动画布位置
- * - normal: 常规模式 - 双击元素自动适配显示（带动画）
- * - move: 移动模式 - 移动画布内部的组件
+ * - grab: 抓握模式 - 左键拖动移动画布位置
+ * - normal: 常规模式 - 双击元素自动适配显示
+ * - move: 移动模式 - 左键拖拽移动画布内的组件
  */
 import React, {
     useRef,
@@ -40,6 +49,10 @@ const DEFAULT_FIT_PADDING = 50;
 const FIT_ANIMATION_DURATION = 0.5;
 /** 适配动画缓动函数 */
 const FIT_ANIMATION_EASING = [0.4, 0, 0.2, 1] as const;
+/** 可视区域检测间隔（毫秒） */
+const VIEWPORT_CHECK_INTERVAL = 500;
+/** 显示"无元素"提示的延迟（毫秒） */
+const NO_ITEMS_HINT_DELAY = 1000;
 
 // ==================== 可拖拽Item组件 ====================
 
@@ -132,14 +145,22 @@ function DraggableItem({
 // ==================== Canvas主组件 ====================
 
 /**
- * 无限画布组件
+ * 无限画布基础组件
+ * 实现了画布内部功能，如需添加外部UI控件，参考 Canvas.example.tsx
  * 
  * 功能特性：
- * 1. 无限拖动 - 画布可以无限平移
- * 2. 滚轮滚动 - 使用滚轮进行垂直/水平滚动
- * 3. Ctrl+滚轮缩放 - 按住Ctrl并滚动滚轮可以缩放画布
- * 4. 中键拖拽 - 按住鼠标中键可以拖拽画布（所有模式下都可用）
- * 5. 三种鼠标模式 - grab/normal/move
+ * 1. 无限平移 - 滚轮滚动 / 中键拖拽 / 抓握模式拖拽
+ * 2. 缩放 - Ctrl+滚轮以鼠标位置为中心缩放
+ * 3. 组件拖拽 - 移动模式下拖拽画布内的组件
+ * 4. 自动适配 - 双击组件自动居中显示（带流畅动画）
+ * 5. 新元素定位 - 添加新元素时自动移动画布使其居中
+ * 6. 可视区域检测 - 检测当前视口是否有元素，提供定位到最近元素功能
+ * 7. 受控模式 - scale和offset支持外部控制（受控/非受控双模式）
+ * 
+ * 三种鼠标模式：
+ * - grab: 抓握模式 - 左键拖动移动画布位置
+ * - normal: 常规模式 - 双击元素自动适配显示
+ * - move: 移动模式 - 左键拖拽移动画布内的组件
  */
 export default function Canvas({
     className,
@@ -156,15 +177,79 @@ export default function Canvas({
     onModeChange,
     onItemDoubleClick,
     fitPadding = DEFAULT_FIT_PADDING,
+    autoFitNewItem = true,
+    scale: controlledScale,
+    onScaleChange,
+    offset: controlledOffset,
+    onOffsetChange,
 }: CanvasProps) {
     // 容器ref
     const containerRef = useRef<HTMLDivElement>(null);
 
-    // 视图状态：偏移量和缩放
-    const [viewState, setViewState] = useState<ViewState>({
+    // 用于追踪items变化，检测新元素添加
+    const prevItemsRef = useRef<CanvasItemData[]>(items);
+    const prevItemIdsRef = useRef<Set<string>>(new Set(items.map(item => item.id)));
+
+    // 判断是否为受控模式
+    const isScaleControlled = controlledScale !== undefined;
+    const isOffsetControlled = controlledOffset !== undefined;
+
+    // 内部视图状态（非受控模式使用）
+    const [internalViewState, setInternalViewState] = useState<ViewState>({
         offset: initialViewState?.offset ?? { x: 0, y: 0 },
         scale: initialViewState?.scale ?? 1,
     });
+
+    // 计算实际使用的视图状态（支持受控和非受控模式）
+    const viewState: ViewState = {
+        scale: isScaleControlled ? controlledScale : internalViewState.scale,
+        offset: isOffsetControlled ? controlledOffset : internalViewState.offset,
+    };
+
+    // 使用ref存储最新的视图状态，供回调和动画使用
+    const viewStateRef = useRef(viewState);
+    viewStateRef.current = viewState;
+
+    // 用于在 useEffect 回调中获取最新的 setViewState 函数
+    const setViewStateRef = useRef<(newState: ViewState | ((prev: ViewState) => ViewState)) => void>(() => {});
+
+    /**
+     * 更新视图状态（同时支持受控和非受控模式）
+     * 使用 queueMicrotask 延迟触发回调，避免在渲染期间更新父组件状态
+     */
+    const setViewState = useCallback((newState: ViewState | ((prev: ViewState) => ViewState)) => {
+        const currentState = viewStateRef.current;
+        const resolvedState = typeof newState === 'function' 
+            ? newState(currentState) 
+            : newState;
+
+        // 更新内部状态
+        setInternalViewState(resolvedState);
+
+        // 使用 queueMicrotask 延迟触发回调，避免在渲染期间更新父组件状态
+        queueMicrotask(() => {
+            // 检查scale是否变化
+            if (resolvedState.scale !== currentState.scale) {
+                onScaleChange?.(resolvedState.scale);
+            }
+
+            // 检查offset是否变化
+            if (resolvedState.offset.x !== currentState.offset.x || 
+                resolvedState.offset.y !== currentState.offset.y) {
+                onOffsetChange?.(resolvedState.offset);
+            }
+
+            // 触发通用回调
+            if (resolvedState.scale !== currentState.scale ||
+                resolvedState.offset.x !== currentState.offset.x ||
+                resolvedState.offset.y !== currentState.offset.y) {
+                onViewChange?.(resolvedState);
+            }
+        });
+    }, [onScaleChange, onOffsetChange, onViewChange]);
+
+    // 更新 setViewState ref
+    setViewStateRef.current = setViewState;
 
     // 拖拽状态
     const [isPanning, setIsPanning] = useState(false);
@@ -185,6 +270,112 @@ export default function Canvas({
 
     // 动画控制器引用，用于中断动画
     const animationControlsRef = useRef<ReturnType<typeof animate>[]>([]);
+
+    // 可视区域内是否有元素
+    const [hasItemsInViewport, setHasItemsInViewport] = useState(true);
+
+    // 是否显示"无元素"提示（延迟显示，避免频繁闪烁）
+    const [showNoItemsHint, setShowNoItemsHint] = useState(false);
+
+    // 最近的元素
+    const [nearestItem, setNearestItem] = useState<CanvasItemData | null>(null);
+
+    // ==================== 可视区域检测功能 ====================
+
+    /**
+     * 检测指定item是否在当前可视区域内
+     */
+    const isItemInViewport = useCallback(
+        (item: CanvasItemData, containerWidth: number, containerHeight: number): boolean => {
+            const { offset, scale } = viewStateRef.current;
+
+            // item在屏幕上的位置
+            const itemLeft = item.x * scale + offset.x;
+            const itemTop = item.y * scale + offset.y;
+            const itemWidth = (item.width ?? 200) * scale;
+            const itemHeight = (item.height ?? 150) * scale;
+            const itemRight = itemLeft + itemWidth;
+            const itemBottom = itemTop + itemHeight;
+
+            // 检测是否与可视区域相交
+            return !(
+                itemRight < 0 ||
+                itemLeft > containerWidth ||
+                itemBottom < 0 ||
+                itemTop > containerHeight
+            );
+        },
+        []
+    );
+
+    /**
+     * 查找距离可视区域中心最近的元素
+     */
+    const findNearestItem = useCallback(
+        (containerWidth: number, containerHeight: number): CanvasItemData | null => {
+            if (items.length === 0) return null;
+
+            const { offset, scale } = viewStateRef.current;
+
+            // 可视区域中心点（画布坐标系）
+            const viewportCenterX = (containerWidth / 2 - offset.x) / scale;
+            const viewportCenterY = (containerHeight / 2 - offset.y) / scale;
+
+            let nearest: CanvasItemData | null = null;
+            let minDistance = Infinity;
+
+            items.forEach((item) => {
+                // item的中心点
+                const itemCenterX = item.x + (item.width ?? 200) / 2;
+                const itemCenterY = item.y + (item.height ?? 150) / 2;
+
+                // 计算距离
+                const distance = Math.sqrt(
+                    Math.pow(itemCenterX - viewportCenterX, 2) +
+                    Math.pow(itemCenterY - viewportCenterY, 2)
+                );
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearest = item;
+                }
+            });
+
+            return nearest;
+        },
+        [items]
+    );
+
+    /**
+     * 检测可视区域内是否有元素
+     */
+    const checkViewportItems = useCallback(() => {
+        const container = containerRef.current;
+        if (!container || items.length === 0) {
+            setHasItemsInViewport(items.length === 0);
+            setNearestItem(null);
+            return;
+        }
+
+        const containerRect = container.getBoundingClientRect();
+        const containerWidth = containerRect.width;
+        const containerHeight = containerRect.height;
+
+        // 检测是否有任何item在可视区域内
+        const hasItems = items.some((item) =>
+            isItemInViewport(item, containerWidth, containerHeight)
+        );
+
+        setHasItemsInViewport(hasItems);
+
+        // 如果没有元素在可视区域，查找最近的元素
+        if (!hasItems) {
+            const nearest = findNearestItem(containerWidth, containerHeight);
+            setNearestItem(nearest);
+        } else {
+            setNearestItem(null);
+        }
+    }, [items, isItemInViewport, findNearestItem]);
 
     // ==================== 自动适配功能（带动画） ====================
 
@@ -265,7 +456,6 @@ export default function Canvas({
                     };
 
                     setViewState(currentViewState);
-                    onViewChangeRef.current?.(currentViewState);
                 },
                 onComplete: () => {
                     // 动画完成
@@ -278,7 +468,6 @@ export default function Canvas({
                         offset: { x: targetOffsetX, y: targetOffsetY },
                     };
                     setViewState(finalViewState);
-                    onViewChangeRef.current?.(finalViewState);
                 },
             });
 
@@ -287,6 +476,78 @@ export default function Canvas({
         },
         [fitPadding, maxScale, minScale, stopFitAnimation]
     );
+
+    /**
+     * 定位到最近的元素
+     */
+    const navigateToNearestItem = useCallback(() => {
+        if (nearestItem) {
+            fitToItem(nearestItem);
+            setShowNoItemsHint(false);
+        }
+    }, [nearestItem, fitToItem]);
+
+    // 监听新元素添加，自动适配显示
+    useEffect(() => {
+        if (!autoFitNewItem) {
+            // 更新追踪的items
+            prevItemsRef.current = items;
+            prevItemIdsRef.current = new Set(items.map(item => item.id));
+            return;
+        }
+
+        const currentIds = new Set(items.map(item => item.id));
+        const prevIds = prevItemIdsRef.current;
+
+        // 查找新添加的元素
+        const newItems = items.filter(item => !prevIds.has(item.id));
+
+        if (newItems.length > 0) {
+            // 取最后一个新添加的元素进行适配
+            const newestItem = newItems[newItems.length - 1];
+            
+            // 延迟一帧执行，确保DOM已更新
+            requestAnimationFrame(() => {
+                fitToItem(newestItem);
+            });
+        }
+
+        // 更新追踪的items
+        prevItemsRef.current = items;
+        prevItemIdsRef.current = currentIds;
+    }, [items, autoFitNewItem, fitToItem]);
+
+    // 定期检测可视区域
+    useEffect(() => {
+        // 初始检测
+        checkViewportItems();
+
+        // 定期检测
+        const intervalId = setInterval(checkViewportItems, VIEWPORT_CHECK_INTERVAL);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [checkViewportItems]);
+
+    // 延迟显示"无元素"提示，避免快速滑动时闪烁
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout | null = null;
+
+        if (!hasItemsInViewport && items.length > 0 && !isAnimating && !isPanning) {
+            timeoutId = setTimeout(() => {
+                setShowNoItemsHint(true);
+            }, NO_ITEMS_HINT_DELAY);
+        } else {
+            setShowNoItemsHint(false);
+        }
+
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, [hasItemsInViewport, items.length, isAnimating, isPanning]);
 
     /**
      * 处理item双击事件
@@ -302,13 +563,6 @@ export default function Canvas({
     );
 
     // ==================== 滚轮事件处理（使用原生事件以阻止浏览器默认缩放） ====================
-
-    // 使用ref存储最新的状态值，避免useEffect依赖频繁变化
-    const viewStateRef = useRef(viewState);
-    viewStateRef.current = viewState;
-
-    const onViewChangeRef = useRef(onViewChange);
-    onViewChangeRef.current = onViewChange;
 
     useEffect(() => {
         const container = containerRef.current;
@@ -357,8 +611,7 @@ export default function Canvas({
                     offset: { x: newOffsetX, y: newOffsetY },
                 };
 
-                setViewState(newViewState);
-                onViewChangeRef.current?.(newViewState);
+                setViewStateRef.current(newViewState);
             } else {
                 // 普通滚动：平移画布
                 const deltaX = e.shiftKey ? e.deltaY : e.deltaX;
@@ -374,8 +627,7 @@ export default function Canvas({
                     offset: newOffset,
                 };
 
-                setViewState(newViewState);
-                onViewChangeRef.current?.(newViewState);
+                setViewStateRef.current(newViewState);
             }
         };
 
@@ -445,7 +697,6 @@ export default function Canvas({
 
                 setViewState(newViewState);
                 setPanStart({ x: e.clientX, y: e.clientY });
-                onViewChange?.(newViewState);
             }
 
             // Item拖拽（只在移动模式下有效）
@@ -511,17 +762,16 @@ export default function Canvas({
                 const deltaX = e.clientX - panStart.x;
                 const deltaY = e.clientY - panStart.y;
 
-                setViewState((prev) => {
-                    const newViewState = {
-                        ...prev,
-                        offset: {
-                            x: prev.offset.x + deltaX,
-                            y: prev.offset.y + deltaY,
-                        },
-                    };
-                    onViewChange?.(newViewState);
-                    return newViewState;
-                });
+                const currentState = viewStateRef.current;
+                const newViewState = {
+                    ...currentState,
+                    offset: {
+                        x: currentState.offset.x + deltaX,
+                        y: currentState.offset.y + deltaY,
+                    },
+                };
+
+                setViewStateRef.current(newViewState);
                 setPanStart({ x: e.clientX, y: e.clientY });
             }
 
@@ -631,6 +881,24 @@ export default function Canvas({
                 {mode === 'normal' && '🖱️ Normal'}
                 {mode === 'move' && '✥ Move'}
             </div>
+
+            {/* 无元素提示 - 当可视区域内没有元素时显示 */}
+            {showNoItemsHint && nearestItem && (
+                <div className={styles['canvas__no-items-hint']}>
+                    <div className={styles['canvas__no-items-hint-content']}>
+                        <span className={styles['canvas__no-items-hint-icon']}>🔍</span>
+                        <span className={styles['canvas__no-items-hint-text']}>
+                            No items in view
+                        </span>
+                        <button
+                            className={styles['canvas__no-items-hint-button']}
+                            onClick={navigateToNearestItem}
+                        >
+                            Go to nearest item
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

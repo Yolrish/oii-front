@@ -74,6 +74,16 @@ export interface CanvasProps {
     onItemDoubleClick?: (id: string, item: CanvasItemData) => void;
     /** 自动适配时的边距（像素） */
     fitPadding?: number;
+    /** 添加新元素时是否自动适配显示（移动画布使新元素居中） */
+    autoFitNewItem?: boolean;
+    /** 受控模式：外部控制的缩放比例 */
+    scale?: number;
+    /** 受控模式：缩放比例变化时的回调 */
+    onScaleChange?: (scale: number) => void;
+    /** 受控模式：外部控制的偏移量 */
+    offset?: Point;
+    /** 受控模式：偏移量变化时的回调 */
+    onOffsetChange?: (offset: Point) => void;
 }
 
 // ==================== Hook返回类型 ====================

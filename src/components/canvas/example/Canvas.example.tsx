@@ -1,18 +1,24 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Canvas, useCanvasItems, type CanvasItemData, type CanvasMode } from '../index';
+import { Canvas, useCanvasItems, type CanvasItemData, type CanvasMode, type Point } from '../index';
 
 /**
  * Canvas组件使用示例
- * 展示如何使用Canvas组件、useCanvasItems Hook 和三种鼠标模式
+ * 展示如何使用Canvas组件、useCanvasItems Hook、三种鼠标模式和受控缩放
  */
 export default function CanvasExample() {
     // 当前鼠标模式
     const [mode, setMode] = useState<CanvasMode>('normal');
 
+    // 受控的缩放比例
+    const [scale, setScale] = useState(1);
+
+    // 受控的偏移量（可选）
+    const [offset, setOffset] = useState<Point>({ x: 0, y: 0 });
+
     // 使用 useCanvasItems Hook 管理画布中的items
-    const { items, addItem, updateItemPosition, removeItem } = useCanvasItems([
+    const { items, addItem, updateItemPosition, removeItem, clearItems } = useCanvasItems([
         // 初始items
         {
             id: 'item-1',
@@ -145,6 +151,92 @@ export default function CanvasExample() {
                 >
                     + Add Card
                 </button>
+                {/* 缩放控制 */}
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        padding: '4px 8px',
+                        backgroundColor: 'hsl(var(--card) / 0.95)',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: '6px',
+                    }}
+                >
+                    <button
+                        onClick={() => setScale((s) => Math.max(0.2, s - 0.1))}
+                        style={{
+                            width: '28px',
+                            height: '28px',
+                            fontSize: '16px',
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: 'hsl(var(--foreground))',
+                        }}
+                    >
+                        −
+                    </button>
+                    <span
+                        style={{
+                            minWidth: '50px',
+                            textAlign: 'center',
+                            fontSize: '12px',
+                            fontWeight: 500,
+                            color: 'hsl(var(--foreground))',
+                        }}
+                    >
+                        {Math.round(scale * 100)}%
+                    </span>
+                    <button
+                        onClick={() => setScale((s) => Math.min(3, s + 0.1))}
+                        style={{
+                            width: '28px',
+                            height: '28px',
+                            fontSize: '16px',
+                            backgroundColor: 'transparent',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: 'hsl(var(--foreground))',
+                        }}
+                    >
+                        +
+                    </button>
+                    <button
+                        onClick={() => setScale(1)}
+                        style={{
+                            padding: '4px 8px',
+                            fontSize: '11px',
+                            backgroundColor: 'hsl(var(--muted))',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: 'hsl(var(--muted-foreground))',
+                        }}
+                    >
+                        Reset
+                    </button>
+                </div>
+                {/* 清空 */}
+                <button
+                    onClick={() => clearItems()}
+                    style={{
+                        padding: '8px 16px',
+                        fontSize: '14px',
+                        fontWeight: 500,
+                        backgroundColor: 'hsl(var(--destructive, #ef4444))',
+                        color: 'hsl(var(--destructive-foreground, white))',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                    }}
+                    title="Clear all items"
+                >
+                    Clear All
+                </button>
             </div>
 
             {/* 模式切换器 */}
@@ -217,7 +309,7 @@ export default function CanvasExample() {
                 </span>
             </div>
 
-            {/* Canvas组件 */}
+            {/* Canvas组件 - 使用受控的scale和offset */}
             <Canvas
                 items={items}
                 renderItem={renderItem}
@@ -228,6 +320,13 @@ export default function CanvasExample() {
                 gridSize={20}
                 minScale={0.2}
                 maxScale={3}
+                autoFitNewItem={true}
+                // 受控模式：外部控制缩放
+                scale={scale}
+                onScaleChange={setScale}
+                // 受控模式：外部控制偏移（可选）
+                offset={offset}
+                onOffsetChange={setOffset}
             />
         </div>
     );

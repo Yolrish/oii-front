@@ -236,6 +236,80 @@
     }
 }
 
+/* ==================== 无元素提示 ==================== */
+
+.canvas__no-items-hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    pointer-events: auto;
+    /* 入场动画 */
+    animation: fadeInScale 0.3s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.canvas__no-items-hint-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 32px;
+    background-color: hsl(var(--card) / 0.95);
+    border: 1px solid hsl(var(--border));
+    border-radius: 12px;
+    backdrop-filter: blur(12px);
+    box-shadow: 
+        0 4px 24px hsl(var(--foreground) / 0.1),
+        0 0 0 1px hsl(var(--border) / 0.5);
+}
+
+.canvas__no-items-hint-icon {
+    font-size: 32px;
+    line-height: 1;
+}
+
+.canvas__no-items-hint-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+}
+
+.canvas__no-items-hint-button {
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: hsl(var(--primary-foreground));
+    background-color: hsl(var(--primary));
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 
+        background-color 0.2s ease,
+        transform 0.1s ease,
+        box-shadow 0.2s ease;
+}
+
+.canvas__no-items-hint-button:hover {
+    background-color: hsl(var(--primary) / 0.9);
+    box-shadow: 0 2px 8px hsl(var(--primary) / 0.3);
+}
+
+.canvas__no-items-hint-button:active {
+    transform: scale(0.98);
+}
+
 /* ==================== 自定义滚动条（如果需要） ==================== */
 
 .canvas::-webkit-scrollbar {
