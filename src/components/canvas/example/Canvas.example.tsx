@@ -1,13 +1,16 @@
 'use client';
 
-import React from 'react';
-import Canvas, { useCanvasItems, type CanvasItemData } from '../Canvas';
+import React, { useState } from 'react';
+import { Canvas, useCanvasItems, type CanvasItemData, type CanvasMode } from '../index';
 
 /**
  * Canvas组件使用示例
- * 展示如何使用Canvas组件和useCanvasItems Hook
+ * 展示如何使用Canvas组件、useCanvasItems Hook 和三种鼠标模式
  */
 export default function CanvasExample() {
+    // 当前鼠标模式
+    const [mode, setMode] = useState<CanvasMode>('normal');
+
     // 使用 useCanvasItems Hook 管理画布中的items
     const { items, addItem, updateItemPosition, removeItem } = useCanvasItems([
         // 初始items
@@ -91,8 +94,6 @@ export default function CanvasExample() {
 
         addItem({
             id: `item-${Date.now()}`,
-            x: Math.random() * 500 + 100,
-            y: Math.random() * 400 + 100,
             width: 180 + Math.random() * 60,
             height: 120 + Math.random() * 60,
             data: {
@@ -101,6 +102,19 @@ export default function CanvasExample() {
             },
         });
     };
+
+    // 模式按钮样式
+    const getModeButtonStyle = (buttonMode: CanvasMode) => ({
+        padding: '8px 16px',
+        fontSize: '14px',
+        fontWeight: 500,
+        backgroundColor: mode === buttonMode ? 'hsl(var(--primary))' : 'hsl(var(--card))',
+        color: mode === buttonMode ? 'hsl(var(--primary-foreground))' : 'hsl(var(--foreground))',
+        border: '1px solid hsl(var(--border))',
+        borderRadius: '6px',
+        cursor: 'pointer',
+        transition: 'all 0.2s ease',
+    });
 
     return (
         <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
@@ -133,6 +147,45 @@ export default function CanvasExample() {
                 </button>
             </div>
 
+            {/* 模式切换器 */}
+            <div
+                style={{
+                    position: 'absolute',
+                    top: '16px',
+                    right: '16px',
+                    zIndex: 1000,
+                    display: 'flex',
+                    gap: '4px',
+                    padding: '4px',
+                    backgroundColor: 'hsl(var(--card) / 0.95)',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    backdropFilter: 'blur(8px)',
+                }}
+            >
+                <button
+                    onClick={() => setMode('grab')}
+                    style={getModeButtonStyle('grab')}
+                    title="Grab Mode - Drag to pan canvas"
+                >
+                    🖐️ Grab
+                </button>
+                <button
+                    onClick={() => setMode('normal')}
+                    style={getModeButtonStyle('normal')}
+                    title="Normal Mode - Double-click to fit item"
+                >
+                    🖱️ Normal
+                </button>
+                <button
+                    onClick={() => setMode('move')}
+                    style={getModeButtonStyle('move')}
+                    title="Move Mode - Drag to move items"
+                >
+                    ✥ Move
+                </button>
+            </div>
+
             {/* 操作提示 */}
             <div
                 style={{
@@ -150,9 +203,18 @@ export default function CanvasExample() {
                     color: 'hsl(var(--muted-foreground))',
                 }}
             >
-                <span style={{ marginRight: '16px' }}>🖱️ Middle-click + drag to pan</span>
-                <span style={{ marginRight: '16px' }}>⚙️ Ctrl + scroll to zoom</span>
-                <span>📦 Drag cards to move</span>
+                {mode === 'grab' && (
+                    <span>🖐️ <strong>Grab Mode:</strong> Drag anywhere to pan the canvas</span>
+                )}
+                {mode === 'normal' && (
+                    <span>🖱️ <strong>Normal Mode:</strong> Double-click a card to fit it to view</span>
+                )}
+                {mode === 'move' && (
+                    <span>✥ <strong>Move Mode:</strong> Drag cards to reposition them</span>
+                )}
+                <span style={{ marginLeft: '16px', opacity: 0.7 }}>
+                    (Middle-click + drag always pans | Ctrl + scroll to zoom)
+                </span>
             </div>
 
             {/* Canvas组件 */}
@@ -160,6 +222,8 @@ export default function CanvasExample() {
                 items={items}
                 renderItem={renderItem}
                 onItemMove={updateItemPosition}
+                mode={mode}
+                onModeChange={setMode}
                 showGrid={true}
                 gridSize={20}
                 minScale={0.2}
@@ -168,4 +232,3 @@ export default function CanvasExample() {
         </div>
     );
 }
-

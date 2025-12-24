@@ -1,10 +1,17 @@
-// Canvas组件导出
-export { default as Canvas } from './Canvas';
-export { useCanvasItems } from './Canvas';
+// ==================== Canvas组件导出 ====================
+
+// 组件
+export { default as Canvas } from './components/Canvas';
+
+// Hooks
+export { useCanvasItems } from './hooks/canvas-hook';
+
+// 类型
 export type {
     CanvasProps,
     CanvasItemData,
+    CanvasMode,
     Point,
     ViewState,
-} from './Canvas';
-
+    UseCanvasItemsReturn,
+} from './types/canvas-type';

@@ -8,18 +8,48 @@
     background-color: var(--canvas-bg, hsl(var(--background)));
     /* 禁止文字选择 */
     user-select: none;
-    /* 默认抓取光标 */
+}
+
+/* ==================== 模式相关光标样式 ==================== */
+
+/* 抓握模式 - 画布显示抓取光标 */
+.canvas--mode-grab {
     cursor: grab;
 }
 
-/* 画布拖拽中状态 */
-.canvas--panning {
+.canvas--mode-grab:active {
     cursor: grabbing;
+}
+
+/* 常规模式 - 画布显示默认光标 */
+.canvas--mode-normal {
+    cursor: default;
+}
+
+/* 移动模式 - 画布显示十字光标 */
+.canvas--mode-move {
+    cursor: crosshair;
+}
+
+/* 画布拖拽中状态（覆盖模式光标） */
+.canvas--panning {
+    cursor: grabbing !important;
 }
 
 /* Item拖拽中状态 */
 .canvas--dragging {
-    cursor: move;
+    cursor: move !important;
+}
+
+/* 适配动画进行中状态 */
+.canvas--animating {
+    /* 动画过程中禁用鼠标事件穿透，避免误操作 */
+    pointer-events: none;
+}
+
+/* 动画过程中恢复鼠标事件，允许用户中断动画 */
+.canvas--animating {
+    pointer-events: auto;
 }
 
 /* 网格背景 */
@@ -50,8 +80,6 @@
     left: 0;
     /* 使用translate定位，性能更好 */
     will-change: transform;
-    /* 默认光标 */
-    cursor: move;
     /* 圆角边框 */
     border-radius: 8px;
     /* 过渡效果 */
@@ -60,6 +88,27 @@
         border-color 0.2s ease;
     /* 边框 */
     border: 2px solid transparent;
+}
+
+/* ==================== Item 模式相关光标样式 ==================== */
+
+/* 抓握模式下的item - 继承画布的抓取光标 */
+.canvas__item--grab {
+    cursor: grab;
+}
+
+.canvas__item--grab:active {
+    cursor: grabbing;
+}
+
+/* 常规模式下的item - 显示指针光标（可双击） */
+.canvas__item--normal {
+    cursor: pointer;
+}
+
+/* 移动模式下的item - 显示移动光标 */
+.canvas__item--move {
+    cursor: move;
 }
 
 /* Item hover状态 */
@@ -89,7 +138,7 @@
     background-color: hsl(var(--card));
 }
 
-/* 拖拽手柄 - 显示在Item左上角 */
+/* 拖拽手柄 - 显示在Item左上角（仅移动模式下显示） */
 .canvas__item-handle {
     position: absolute;
     top: -8px;
@@ -141,14 +190,42 @@
     z-index: 100;
 }
 
+/* ==================== 模式指示器 ==================== */
+
+.canvas__mode-indicator {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    background-color: hsl(var(--card) / 0.9);
+    border: 1px solid hsl(var(--border));
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+    pointer-events: none;
+    /* 动画 */
+    transition: opacity 0.2s ease;
+    z-index: 100;
+}
+
 /* ==================== 响应式调整 ==================== */
 
 @media (max-width: 768px) {
-    .canvas__zoom-indicator {
+    .canvas__zoom-indicator,
+    .canvas__mode-indicator {
         bottom: 12px;
-        right: 12px;
         padding: 4px 8px;
         font-size: 11px;
+    }
+
+    .canvas__zoom-indicator {
+        right: 12px;
+    }
+
+    .canvas__mode-indicator {
+        left: 12px;
     }
 
     .canvas__item-handle {
@@ -169,4 +246,3 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
-
