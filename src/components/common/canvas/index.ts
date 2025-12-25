@@ -15,3 +15,7 @@ export type {
     ViewState,
     UseCanvasItemsReturn,
 } from './types/canvas-type';
+
+// 示例
+export { default as CanvasExample } from './example/normal/Canvas.example';
+export { default as UploadCanvasExample } from './example/upload/Upload.example';

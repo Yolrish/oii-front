@@ -126,35 +126,7 @@ export default function Chat_Create() {
 
             {/* 底部工具栏 */}
             <footer className={styles['chat-create__toolbar']}>
-                <button className={styles['chat-create__tool-btn']}>
-                    <Plus size={18} />
-                </button>
-                <button className={cn(
-                    styles['chat-create__tool-btn'],
-                    styles['chat-create__tool-btn--with-badge']
-                )}>
-                    <Sparkles size={14} />
-                    <span>158 Styles</span>
-                </button>
-                <button className={styles['chat-create__tool-btn']}>
-                    <span>😊</span>
-                    <span>Characters</span>
-                </button>
-                <button className={cn(
-                    styles['chat-create__tool-btn'],
-                    styles['chat-create__tool-btn--active']
-                )}>
-                    <Sparkles size={14} />
-                    <span>Smart</span>
-                </button>
-                <button className={styles['chat-create__tool-btn']}>
-                    <MessageSquare size={14} />
-                    <span>Chat</span>
-                </button>
-                <div className={styles['chat-create__toolbar-spacer']} />
-                <Avatar className={styles['chat-create__user-avatar']}>
-                    <AvatarFallback>U</AvatarFallback>
-                </Avatar>
+
             </footer>
         </div>
     );

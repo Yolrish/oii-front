@@ -1,4 +1,4 @@
-import CanvasExample from "@/components/common/canvas/example/Canvas.example";
+import CanvasExample from "@/components/common/canvas/example/normal/Canvas.example";
 
 export default function TestPage() {
     return (

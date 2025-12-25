@@ -68,8 +68,13 @@
     left: 0;
     /* transform-origin 设置为左上角，确保缩放行为正确 */
     transform-origin: 0 0;
-    /* 开启硬件加速 */
+    /* 开启硬件加速，同时强制重新栅格化避免缩放模糊 */
     will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* 提升渲染质量 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* ==================== 可拖拽Item ==================== */
@@ -78,8 +83,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    /* 使用translate定位，性能更好 */
-    will-change: transform;
     /* 圆角边框 */
     border-radius: 8px;
     /* 过渡效果 */
@@ -88,6 +91,13 @@
         border-color 0.2s ease;
     /* 边框 */
     border: 2px solid transparent;
+    /* 避免缩放时模糊：强制创建独立合成层并重新栅格化 */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    /* 确保图片和文字在缩放时清晰 */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* ==================== Item 模式相关光标样式 ==================== */

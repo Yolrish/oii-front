@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { BaseCanvas, useCanvasItems, type CanvasItemData, type CanvasMode, type Point } from '../index';
+import { BaseCanvas, useCanvasItems, type CanvasItemData, type CanvasMode, type Point } from '../../index';
 
 /**
  * Canvas组件使用示例
@@ -123,7 +123,7 @@ export default function CanvasExample() {
     });
 
     return (
-        <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
+        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
             {/* 工具栏 */}
             <div
                 style={{
@@ -296,16 +296,22 @@ export default function CanvasExample() {
                 }}
             >
                 {mode === 'grab' && (
-                    <span>🖐️ <strong>Grab Mode:</strong> Drag anywhere to pan the canvas</span>
+                    <span>🖐️ Grab
+                        {/* <strong>Grab Mode:</strong> Drag anywhere to pan the canvas */}
+                    </span>
                 )}
                 {mode === 'normal' && (
-                    <span>🖱️ <strong>Normal Mode:</strong> Double-click a card to fit it to view</span>
+                    <span>🖱️ Normal
+                        {/* <strong>Normal Mode:</strong> Double-click a card to fit it to view */}
+                    </span>
                 )}
                 {mode === 'move' && (
-                    <span>✥ <strong>Move Mode:</strong> Drag cards to reposition them</span>
+                    <span>✥ Move
+                        {/* <strong>Move Mode:</strong> Drag cards to reposition them */}
+                    </span>
                 )}
                 <span style={{ marginLeft: '16px', opacity: 0.7 }}>
-                    (Middle-click + drag always pans | Ctrl + scroll to zoom)
+                    {/* (Middle-click + drag always pans | Ctrl + scroll to zoom) */}
                 </span>
             </div>
 
