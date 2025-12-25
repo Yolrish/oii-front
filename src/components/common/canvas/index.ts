@@ -1,7 +1,7 @@
 // ==================== Canvas组件导出 ====================
 
 // 组件
-export { default as Canvas } from './components/Canvas';
+export { default as BaseCanvas } from './components/Canvas';
 
 // Hooks
 export { useCanvasItems } from './hooks/canvas-hook';

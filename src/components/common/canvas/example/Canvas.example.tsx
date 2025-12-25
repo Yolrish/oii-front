@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Canvas, useCanvasItems, type CanvasItemData, type CanvasMode, type Point } from '../index';
+import { BaseCanvas, useCanvasItems, type CanvasItemData, type CanvasMode, type Point } from '../index';
 
 /**
  * Canvas组件使用示例
@@ -310,7 +310,7 @@ export default function CanvasExample() {
             </div>
 
             {/* Canvas组件 - 使用受控的scale和offset */}
-            <Canvas
+            <BaseCanvas
                 items={items}
                 renderItem={renderItem}
                 onItemMove={updateItemPosition}

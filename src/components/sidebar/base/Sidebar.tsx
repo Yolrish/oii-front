@@ -77,7 +77,7 @@ function BaseSidebar({
 
     useEffect(() => {
         if (collapsible === 'none') {
-
+            setOpen(true);
         } else {
             setOpen(false);
         }

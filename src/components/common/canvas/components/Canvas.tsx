@@ -85,7 +85,7 @@ function DraggableItem({
         (e: ReactMouseEvent) => {
             e.stopPropagation();
             onSelect?.(item.id);
-            
+
             // 只有移动模式下才能拖拽组件
             if (mode === 'move') {
                 onDragStart(item.id, e);
@@ -211,7 +211,7 @@ export default function Canvas({
     viewStateRef.current = viewState;
 
     // 用于在 useEffect 回调中获取最新的 setViewState 函数
-    const setViewStateRef = useRef<(newState: ViewState | ((prev: ViewState) => ViewState)) => void>(() => {});
+    const setViewStateRef = useRef<(newState: ViewState | ((prev: ViewState) => ViewState)) => void>(() => { });
 
     /**
      * 更新视图状态（同时支持受控和非受控模式）
@@ -219,8 +219,8 @@ export default function Canvas({
      */
     const setViewState = useCallback((newState: ViewState | ((prev: ViewState) => ViewState)) => {
         const currentState = viewStateRef.current;
-        const resolvedState = typeof newState === 'function' 
-            ? newState(currentState) 
+        const resolvedState = typeof newState === 'function'
+            ? newState(currentState)
             : newState;
 
         // 更新内部状态
@@ -234,7 +234,7 @@ export default function Canvas({
             }
 
             // 检查offset是否变化
-            if (resolvedState.offset.x !== currentState.offset.x || 
+            if (resolvedState.offset.x !== currentState.offset.x ||
                 resolvedState.offset.y !== currentState.offset.y) {
                 onOffsetChange?.(resolvedState.offset);
             }
@@ -413,10 +413,10 @@ export default function Canvas({
             // 计算适配缩放比例（考虑边距）
             const availableWidth = containerWidth - fitPadding * 2;
             const availableHeight = containerHeight - fitPadding * 2;
-            
+
             const scaleX = availableWidth / itemWidth;
             const scaleY = availableHeight / itemHeight;
-            
+
             // 取较小的缩放比例，确保item完全可见，但不超过最大缩放
             let targetScale = Math.min(scaleX, scaleY, maxScale);
             // 也不低于最小缩放
@@ -505,7 +505,7 @@ export default function Canvas({
         if (newItems.length > 0) {
             // 取最后一个新添加的元素进行适配
             const newestItem = newItems[newItems.length - 1];
-            
+
             // 延迟一帧执行，确保DOM已更新
             requestAnimationFrame(() => {
                 fitToItem(newestItem);
@@ -810,9 +810,15 @@ export default function Canvas({
     // 计算网格背景样式
     const gridStyle = showGrid
         ? {
-              backgroundSize: `${gridSize * viewState.scale}px ${gridSize * viewState.scale}px`,
-              backgroundPosition: `${viewState.offset.x}px ${viewState.offset.y}px`,
-          }
+            //   backgroundSize: `${gridSize * viewState.scale}px ${gridSize * viewState.scale}px`,
+            //   backgroundPosition: `${viewState.offset.x}px ${viewState.offset.y}px`,
+            backgroundImage:
+                ` linear-gradient(to right, #dadada 1px, transparent 1px),
+                linear-gradient(to bottom, #dadada 1px, transparent 1px),
+                linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px)`,
+            backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+        }
         : {};
 
     // 根据模式获取画布光标样式类
