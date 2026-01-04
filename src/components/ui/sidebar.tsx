@@ -173,6 +173,7 @@ type SidebarProps = React.ComponentProps<'div'> & {
   containerClassName?: string;
   animateOnHover?: boolean;
   transition?: Transition;
+  disableMobile?: boolean;
 };
 
 function Sidebar({
@@ -184,6 +185,7 @@ function Sidebar({
   animateOnHover = true,
   containerClassName,
   transition = { type: 'spring', stiffness: 350, damping: 35 },
+  disableMobile = false,
   ...props
 }: SidebarProps) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
@@ -212,7 +214,7 @@ function Sidebar({
     );
   }
 
-  if (isMobile) {
+  if (isMobile && !disableMobile) {
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
         <SheetContent

@@ -1,3 +1,4 @@
+'use client'
 import BaseSidebar from "../base/Sidebar"
 import SheetSection from "@/components/common/sheet-section/SheetSection"
 import { SidebarTabEnum } from "../type/sidebar-tab-enum"
@@ -5,7 +6,7 @@ import styles from "./Sidebar_Sheet.module.css"
 import { MenuSquare } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
-import { useCallback } from "react"
+import { useCallback, useState, useEffect } from "react"
 
 interface Sidebar_SheetProps {
     activeTab: string
@@ -18,6 +19,7 @@ export default function Sidebar_Sheet({
 }: Sidebar_SheetProps) {
 
     const router = useRouter();
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleNavTabClick = useCallback((tab: string) => {
         switch (tab) {
@@ -37,6 +39,22 @@ export default function Sidebar_Sheet({
         }
     }, [setActiveTab, router]);
 
+    useEffect(() => {
+        // Adds a keyboard shortcut to toggle the sidebar.
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (
+                event.key === 'b' &&
+                (event.metaKey || event.ctrlKey)
+            ) {
+                event.preventDefault();
+                setIsOpen(!isOpen);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen]);
+
     return (
         <SheetSection
             title=""
@@ -47,6 +65,8 @@ export default function Sidebar_Sheet({
             </button>}
             side="left"
             contentClassName={styles.sheet_content}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
         >
             <BaseSidebar
                 activeTab={activeTab}

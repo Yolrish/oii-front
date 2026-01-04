@@ -14,17 +14,32 @@ interface SheetSectionProps {
     children?: React.ReactNode;
     side?: "left" | "right" | "top" | "bottom";
     contentClassName?: string;
+    isOpen?: boolean;
+    setIsOpen?: (isOpen: boolean) => void;
 }
 
+/**
+ * SheetSection组件的Props
+ * @param title 标题
+ * @param trigger 触发器 - 传入自定义样式的组件作为触发器
+ * @param children 子组件 - 传入自定义样式的组件作为Sheet Content的内容
+ * @param side 方向 - 默认右
+ * @param contentClassName 内容类名 - 传入自定义样式的类名作为Sheet Content的类名
+ * @param isOpen 是否打开 - 外部控制变量 - 默认不添加
+ * @param setIsOpen 设置是否打开 - 外部控制变量 - 默认不添加
+ * @returns SheetSection组件
+ */
 function SheetSection({
     title = "侧边栏",
     trigger = <button className={styles.timeline_sheet_section_triggerButton}>打开侧边栏</button>,
     children,
     side = "right",
-    contentClassName
+    contentClassName,
+    isOpen,
+    setIsOpen,
 }: SheetSectionProps) {
     return (
-        <Sheet>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
                 {trigger}
             </SheetTrigger>

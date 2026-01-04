@@ -94,6 +94,7 @@ function BaseSidebar({
                 className,
             )}
             animateOnHover={false}
+            disableMobile={true}
         >
             {/* <SidebarHeader
                 className={cn(
