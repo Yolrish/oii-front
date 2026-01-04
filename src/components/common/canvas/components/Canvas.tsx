@@ -900,7 +900,10 @@ export default function Canvas({
 
             {/* 无元素提示 - 当可视区域内没有元素时显示 */}
             {showNoItemsHint && nearestItem && (
-                <div className={styles['canvas__no-items-hint']}>
+                <div
+                    className={styles['canvas__no-items-hint']}
+                    onMouseDown={(e) => e.stopPropagation()}
+                >
                     <div className={styles['canvas__no-items-hint-content']}>
                         <span className={styles['canvas__no-items-hint-icon']}>🔍</span>
                         <span className={styles['canvas__no-items-hint-text']}>
