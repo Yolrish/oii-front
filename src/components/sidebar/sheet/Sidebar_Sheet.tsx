@@ -7,6 +7,7 @@ import { MenuSquare } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useRouter } from "next/navigation"
 import { useCallback, useState, useEffect } from "react"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 interface Sidebar_SheetProps {
     activeTab: string
@@ -19,6 +20,7 @@ export default function Sidebar_Sheet({
 }: Sidebar_SheetProps) {
 
     const router = useRouter();
+    const isMobile = useIsMobile();
     const [isOpen, setIsOpen] = useState(false);
 
     const handleNavTabClick = useCallback((tab: string) => {
@@ -65,7 +67,7 @@ export default function Sidebar_Sheet({
             </button>}
             side="left"
             contentClassName={styles.sheet_content}
-            isOpen={isOpen}
+            isOpen={isOpen && isMobile}
             setIsOpen={setIsOpen}
         >
             <BaseSidebar
