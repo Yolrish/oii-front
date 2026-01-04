@@ -68,8 +68,9 @@
     left: 0;
     /* transform-origin 设置为左上角，确保缩放行为正确 */
     transform-origin: 0 0;
-    /* 开启硬件加速，同时强制重新栅格化避免缩放模糊 */
-    will-change: transform;
+    /* 启用 3D 变换上下文，配合 translateZ 强制重新栅格化 */
+    transform-style: preserve-3d;
+    /* 强制创建独立合成层，避免缩放模糊 */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     /* 提升渲染质量 */

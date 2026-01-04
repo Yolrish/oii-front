@@ -268,6 +268,9 @@ export default function Canvas({
     // 是否正在播放适配动画
     const [isAnimating, setIsAnimating] = useState(false);
 
+    // 强制重绘计数器（用于解决缩放后模糊问题）
+    const [forceRepaintKey, setForceRepaintKey] = useState(0);
+
     // 动画控制器引用，用于中断动画
     const animationControlsRef = useRef<ReturnType<typeof animate>[]>([]);
 
@@ -468,6 +471,12 @@ export default function Canvas({
                         offset: { x: targetOffsetX, y: targetOffsetY },
                     };
                     setViewState(finalViewState);
+
+                    // 强制重绘以解决缩放后模糊问题
+                    // 使用 requestAnimationFrame 确保在下一帧触发重绘
+                    requestAnimationFrame(() => {
+                        setForceRepaintKey(prev => prev + 1);
+                    });
                 },
             });
 
@@ -856,7 +865,8 @@ export default function Canvas({
             <div
                 className={styles['canvas__content']}
                 style={{
-                    transform: `translate(${viewState.offset.x}px, ${viewState.offset.y}px) scale(${viewState.scale})`,
+                    // translateZ 的微小变化强制浏览器重新栅格化，解决缩放后模糊问题
+                    transform: `translate(${viewState.offset.x}px, ${viewState.offset.y}px) scale(${viewState.scale}) translateZ(${forceRepaintKey * 0.001}px)`,
                 }}
             >
                 {/* 渲染所有items */}
